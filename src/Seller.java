@@ -1,5 +1,5 @@
 class Seller {
-    private CarManufacturer carManufacturer;
+    final private CarManufacturer carManufacturer;
 
     public Seller(CarManufacturer carManufacturer) {
         this.carManufacturer = carManufacturer;
@@ -7,14 +7,12 @@ class Seller {
 
     public synchronized void receiveCar() {
         try {
-
-            Thread.sleep(3000);
-
+            // while (carManufacturer.getCars().size() == 0) {
+            Thread.sleep(30);
             carManufacturer.getCars().add(new Car());
-
             System.out.println("Toyota выпустил 1 авто");
-            notify();
-
+            notifyAll();
+            // }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -25,11 +23,10 @@ class Seller {
             System.out.println("Продавец продает автомобиль   " + Thread.currentThread().getName());
             while (carManufacturer.getCars().size() == 0) {
                 System.out.println("Продавец: Не могу продать - авто нет!");
-                new Thread(null, carManufacturer::сarManufacturing, "Производство автомобиля").start();
                 wait();
             }
             Thread.sleep(1000);
-           System.out.println("уехал на новеньком авто  " + Thread.currentThread().getName());
+            System.out.println("уехал на новеньком авто  " + Thread.currentThread().getName());
         } catch
         (InterruptedException e) {
             e.printStackTrace();

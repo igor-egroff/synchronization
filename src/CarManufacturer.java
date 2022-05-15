@@ -9,14 +9,20 @@ public class CarManufacturer {
 
 
     public Car carBuyer() {
-        synchronized (seller) {
-            System.out.println(Thread.currentThread().getName() + " зашел в автосалон");
-            return seller.carBuyer();
-        }
+        System.out.println(Thread.currentThread().getName() + " зашел в автосалон");
+        return seller.carBuyer();
+
     }
 
     public void сarManufacturing() {
-        seller.receiveCar();
+        try {
+            while (cars.size() < 2) { //после отгрузки всеех заказов, создаем минимальный запас авто и останавлмваем поток
+                Thread.sleep(3000);
+                seller.receiveCar();
+            }
+        } catch (InterruptedException err) {
+        }
+
     }
 
     public List<Car> getCars() {
