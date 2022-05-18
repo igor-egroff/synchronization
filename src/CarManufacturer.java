@@ -2,10 +2,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CarManufacturer {
+    private static final int STOCK_CARS = 2; // минимальный запас авто
+    private static final int CAR_PRODUCTION_TIME = 3000;
 
     //  Продавец
     Seller seller = new Seller(this);
-    List<Car> cars = new ArrayList<>(10);
+    List<Car> cars = new ArrayList<>();
 
 
     public Car carBuyer() {
@@ -16,8 +18,9 @@ public class CarManufacturer {
 
     public void сarManufacturing() {
         try {
-            while (cars.size() < 2) { //после отгрузки всеех заказов, создаем минимальный запас авто и останавлмваем поток
-                Thread.sleep(3000);
+            while (cars.size() < STOCK_CARS) { //после отгрузки всех заказов, создаем минимальный запас авто
+                // и останавливаем поток
+                Thread.sleep(CAR_PRODUCTION_TIME);
                 seller.receiveCar();
             }
         } catch (InterruptedException err) {

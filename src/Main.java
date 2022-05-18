@@ -1,10 +1,13 @@
 public class Main {
+    private static final int NUMBER_OF_BUYERS = 3;
+
     public static void main(String[] args) {
         final CarManufacturer carManufacturer = new CarManufacturer();
 
-        new Thread(null, carManufacturer::carBuyer, "Покупатель 1").start();
-        new Thread(null, carManufacturer::carBuyer, "Покупатель 2").start();
-        new Thread(null, carManufacturer::carBuyer, "Покупатель 3").start();
+        for (int i = 1; i < NUMBER_OF_BUYERS; i++) {
+            new Thread(null, carManufacturer::carBuyer, "Покупатель " + i).start();
+        }
+
         new Thread(null, carManufacturer::сarManufacturing, "Производство автомобиля").start();
 
     }
